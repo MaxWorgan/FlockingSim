@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<group>
+	<Flocking_Parameters>
+		<Seperation_Strength>0.0295989</Seperation_Strength>
+		<Align_Strength>0.0204161</Align_Strength>
+		<Cohesion_Strength>0.0525558</Cohesion_Strength>
+		<Neighbourhood_distance>100</Neighbourhood_distance>
+	</Flocking_Parameters>
+	<Center_Pull>
+		<Center_Pull_Strength>0.000510204</Center_Pull_Strength>
+		<Center_Size>100</Center_Size>
+	</Center_Pull>
+	<Attractors>
+		<Attractor_Strength>10</Attractor_Strength>
+		<Attractor_Min_Distance>10</Attractor_Min_Distance>
+	</Attractors>
+	<Repulsors>
+		<Repulsor_Strength>10</Repulsor_Strength>
+		<Repulsor_Min_Distance>10</Repulsor_Min_Distance>
+	</Repulsors>
+	<Wind_Parameters>
+		<Wind_Amount>0.765306</Wind_Amount>
+		<Wind_Mult>0.000459184</Wind_Mult>
+	</Wind_Parameters>
+</group>
