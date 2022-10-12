@@ -33,7 +33,7 @@
 <group>
 	<Flocking_Parameters>
 		<Seperation_Strength>0.0331699</Seperation_Strength>
-		<Align_Strength>0.0811243</Align_Strength>
+		<Align_Strength>0.0515355</Align_Strength>
 		<Cohesion_Strength>0.0250075</Cohesion_Strength>
 		<Neighbourhood_distance>112.5</Neighbourhood_distance>
 	</Flocking_Parameters>
@@ -59,7 +59,7 @@
 		<Repulsor_Min_Distance>2.04082</Repulsor_Min_Distance>
 	</Repulsors>
 	<Wind_Parameters>
-		<Wind_Amount>2.04082</Wind_Amount>
+		<Wind_Amount>0</Wind_Amount>
 		<Wind_Mult>0.000612245</Wind_Mult>
 	</Wind_Parameters>
 </group>

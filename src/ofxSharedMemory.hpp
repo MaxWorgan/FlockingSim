@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/shm.h>
+#include <sys/mman.h>
 #include <pthread.h>
 #include <cerrno>
+#include <fcntl.h>
 
 
 /*

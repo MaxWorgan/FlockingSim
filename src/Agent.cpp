@@ -21,7 +21,7 @@ Agent::Agent(glm::vec3 position) {
     mAcceleration.z = 0;
     
     mMass = ofRandom(2.0,3.5);
-    mMaxSpeed = 2.0f + ofRandom(2.0f);
+    mMaxSpeed = 5.0f + ofRandom(2.0f);
     
 }
 
@@ -37,6 +37,9 @@ void Agent::updatePosition(){
     mPosition += mVelocity;
     mAcceleration *= 0.0f;
 
+}
+void Agent::setMaxSpeed(float ms){
+  mMaxSpeed = ms + ofRandom(ms*0.25);
 }
 
 void Agent::draw(){

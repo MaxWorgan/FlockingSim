@@ -8,7 +8,7 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
-OF_ROOT = /Users/max/Documents/of_v0.11.2_osx_release
+OF_ROOT = /home/mw469/Documents/FlockingProject/of_v0.11.2_linux64gcc6_release
 
 ################################################################################
 # PROJECT ROOT
@@ -77,7 +77,7 @@ OF_ROOT = /Users/max/Documents/of_v0.11.2_osx_release
 # add a runtime path to search for those shared libraries, since they aren't 
 # incorporated directly into the final executable application binary.
 # TODO: should this be a default setting?
-# PROJECT_LDFLAGS=-Wl,-rpath=./libs
+PROJECT_LDFLAGS=-lrt
 
 ################################################################################
 # PROJECT DEFINES

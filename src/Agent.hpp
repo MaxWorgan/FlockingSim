@@ -21,6 +21,7 @@ public:
     void updatePosition();
     void setPosition(glm::vec3 pos);
     void draw();
+    void setMaxSpeed(float ms);
     
     glm::vec3 mPosition;
     glm::vec3 mVelocity;

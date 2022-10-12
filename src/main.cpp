@@ -1,15 +1,26 @@
 #include "ofMain.h"
 #include "ofApp.h"
+#include "ofAppGLFWWindow.h"
+#include "GuiApp.hpp"
 
 //========================================================================
 int main( ){
-    ofGLWindowSettings settings;
-       settings.setGLVersion(1, 2);  // Programmable pipeline
-       ofCreateWindow(settings);
+    ofGLFWWindowSettings settings;
+    settings.setGLVersion(1, 2);  // Programmable pipeline
+    shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
+    
+    settings.setSize(220,500);
+    settings.resizable = true;
+    shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
+    
+    
+    shared_ptr<ofApp> mainApp(new ofApp);
+    shared_ptr<GuiApp> guiApp(new GuiApp);
+    mainApp->guiWindow = guiApp;
 
-	// this kicks off the running of my app
-	// can be OF_WINDOW or OF_FULLSCREEN
-	// pass in width and height too:
-	ofRunApp(new ofApp());
+    ofRunApp(guiWindow, guiApp);
+    ofRunApp(mainWindow, mainApp);
+
+    ofRunMainLoop();
 
 }

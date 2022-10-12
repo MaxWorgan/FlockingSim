@@ -10,7 +10,7 @@
 
 void SwarmStats::tick(vector<Agent> &flock) {
     for( auto f : flock){
-        mBoundingBox.update(f.mPosition)
+        mBoundingBox.update(f.mPosition);
     }
     
     counter++;

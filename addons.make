@@ -1,4 +1,3 @@
-ofxFisheye
 ofxGui
 ofxOsc
 ofxRange
