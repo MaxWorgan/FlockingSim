@@ -7,6 +7,7 @@
 
 #include "AgentController.hpp"
 #include "range.hpp"
+#include <glm/gtc/random.hpp>
 
 using util::lang::indices;
 
@@ -21,15 +22,6 @@ AgentController::AgentController(size_t numAgents,shared_ptr<GuiApp> guiWindow){
     ofLog() << "Memory was mapped? " << isConnected;
     ofLog() << "&mAllPositions[0] " << &mAllPositions[0];
     ofLog() << "Size: " << size;
-    mPrevRatio = 1.0f;
-    mRatio = 0.0f;
-    mRatioDT = 0.0f;
-    mBBArea = 0.0f;
-    mPrevBBArea = 0.0f;
-    mBBAreaDT = 0.0f;
-    mDirection = glm::vec3(0,0,0);
-    mPrevDirection = glm::vec3(0,0,0);
-    mDirectionDT = 0.0f;
     gui = guiWindow;
     
     //GUI stuff
@@ -41,8 +33,17 @@ AgentController::AgentController(size_t numAgents,shared_ptr<GuiApp> guiWindow){
     
     gui->bClearRepulsors.addListener(this, &AgentController::clearRepulsors);
     
+    gui->bDrawNeighbourhoodDistance.addListener(this, &AgentController::toggleDrawNeighbourhood);
+    bDrawNeighbourhood = gui->bDrawNeighbourhoodDistance;
     
+    gui->bDrawBoundingBox.addListener(this, &AgentController::toggleDrawBoundingBox);
+    
+    gui->mLowerThreshold.addListener(this, &AgentController::setLowerThreshold);
+    gui->mHigherThreshold.addListener(this, &AgentController::setHigherThreshold);
+    
+
 }
+
 
 void AgentController::applyFlocking() {
     auto neighbourhoodDistanceSq = gui->mNeighbourhoodDistance * gui->mNeighbourhoodDistance;
@@ -77,14 +78,13 @@ void AgentController::applyFlocking() {
         }
     }
 }
-
 void AgentController::createRandomRepulsor(){
-    repulsors.push_back(glm::vec3((ofRandomWidth()*2.0 - ofGetWidth()) * 0.25, (ofRandomHeight()*2.0 - ofGetHeight()) *0.25, ofRandom(-150,150)));
+    repulsors.push_back(glm::ballRand(1000.0f));
     repulsorTimers.push_back(ofGetUnixTime() + 10);
 }
 
 void AgentController::createRandomAttractor(){
-    attractors.push_back(glm::vec3((ofRandomWidth()*2.0 - ofGetWidth()) * 0.25, (ofRandomHeight()*2.0 - ofGetHeight()) *0.25, ofRandom(-150,150)));
+    attractors.push_back(glm::ballRand(1000.0f));
     attractorTimers.push_back(ofGetUnixTime() + 10);
 }
 void AgentController::clearAttractors(){
@@ -94,6 +94,13 @@ void AgentController::clearRepulsors(){
     repulsors.clear();
 }
 
+void AgentController::toggleDrawNeighbourhood(bool& b){
+    bDrawNeighbourhood = b;
+}
+
+void AgentController::toggleDrawBoundingBox(bool& b){
+    bDrawBoundingBox = b;
+}
 
 void AgentController::attract(Agent &agent, const glm::vec3 &pos, const float strength, const float minDistance){
     glm::vec3 direction = pos - agent.mPosition;
@@ -105,11 +112,10 @@ void AgentController::attract(Agent &agent, const glm::vec3 &pos, const float st
 
 void AgentController::applyCenterPull(Agent &agent,const glm::vec3 &center) {
     glm::vec3 direction = center - agent.mPosition;
-    float distToPosition2 = glm::length2(direction);
-    if(distToPosition2 > gui->mMaxCenterDistanceSq){
-        agent.applyForce(glm::normalize(direction) * (distToPosition2 * (gui->mCenterPullStrength.get()*0.01)));
+    float distance = glm::length(direction);
+    if(distance > gui->mMaxCenterDistanceSq){
+        agent.applyForce(glm::normalize(direction) * (distance - gui->mMaxCenterDistanceSq) * gui->mCenterPullStrength.get());
     }
-    
 }
 
 void AgentController::applyWind(Agent &agent, const float windAmount){
@@ -150,22 +156,8 @@ void AgentController::updateAgents(){
     for( auto i: indices(flock)){
         flock[i].updatePosition();
         mAllPositions[i] = flock[i].mPosition;
-        mDirection += flock[i].mVelocity;
     }
     mSwarmStats.tick(flock);
-    
-    glm::normalize(mDirection);
-    mDirectionDT = glm::angle(mDirection, mPrevDirection);
-    mPrevDirection = mDirection;
-    
-    mRatio = mSwarmStats.mBoundingBox.ratio();
-    mRatioDT = abs(mRatio - mPrevRatio);
-    mPrevRatio = mRatio;
-    
-    mBBArea = mSwarmStats.mBoundingBox.area() * 0.00001;
-    mBBAreaDT = abs(mBBArea - mPrevBBArea);
-    mPrevBBArea = mBBArea;
-    
     mSharedPositionData.setData(&mAllPositions[0]);
 }
 
@@ -174,7 +166,7 @@ void AgentController::updateAgent(int index, float x, float y, float z){
 }
 
 void AgentController::draw(bool drawAttractors) {
-   
+
     if(drawAttractors) {
         ofPushStyle();
         ofSetColor(ofColor::white);
@@ -187,7 +179,32 @@ void AgentController::draw(bool drawAttractors) {
         }
         ofPopStyle();
     }
-    for(auto &a : flock) a.draw();
+    if(gui->bDrawNeighbourhoodDistance){
+        for(auto &a : flock){
+            float s = gui->mNeighbourhoodDistance;
+            float s1 =  s * gui->mLowerThreshold;
+            float s2 =  s * gui->mHigherThreshold;
+            float s3 =  s;
+            ofPushStyle();
+            ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+            //draw cohesion sphere
+            ofSetColor(ofColor::lightBlue,gui->mCohesionStrength * 100.0f);
+            ofDrawSphere(a.mPosition,s3);
+            //draw allignment sphere
+            ofSetColor(ofColor::lightYellow,gui->mAlignStrength * 100.0f);
+            ofDrawSphere(a.mPosition,s2);
+            //draw seperate sphere
+            ofSetColor(ofColor::paleVioletRed,gui->mSeperateStrength * 100.0f);
+            ofDrawSphere(a.mPosition,s1);
+            ofPopStyle();
+            a.draw();
+        }
+    } else {
+        for(auto &a : flock) a.draw();
+    }
+    if(gui->bDrawBoundingBox){
+        mSwarmStats.mBoundingBox.draw();
+    }
 
 }
 
@@ -199,4 +216,17 @@ string AgentController::getAllPositions(){
         output += ofToString(a.mPosition);
     }
     return output;
+}
+
+
+void AgentController::setHigherThreshold(float& f){
+    if(f < gui->mLowerThreshold){
+        gui->mLowerThreshold = f;
+    }
+}
+
+void AgentController::setLowerThreshold(float& f){
+    if(f > gui->mHigherThreshold){
+        gui->mHigherThreshold = f;
+    }
 }

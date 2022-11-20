@@ -11,16 +11,20 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetFrameRate(30);
     
-    mCam.setNearClip(0.1);
-    mCam.setFarClip(200000);
-    mCam.setDistance(1200);
+    mCam.resetTransform();
+    mCam.setFov(60);
+    mCam.clearParent();
+    mCam.setPosition(0, 0, -2000);
     
-    mAgentController = new AgentController(300,guiWindow);
+    mEasyCam.setDistance(2000);
+    mEasyCam.setNearClip(0.1);
+    mEasyCam.setFarClip(200000);
+
+    mAgentController = new AgentController(100,guiWindow);
 
 
     bWriteData        = false;
     bEnableSimulation = true;
-    bSendStats        = false;
     bDrawAttractors   = true;
     bDrawSparkLines   = true;
     
@@ -37,9 +41,24 @@ void ofApp::setup(){
         settings.styles.curve.line.color = ofColor(255,0,i*25);
         sparkLines.push_back(ofxSparkline(settings,ofGetWidth()));
     }
+    
+    guiWindow->bCameraOrtho.addListener(this, &ofApp::setOrtho);
+    guiWindow->bFollowCamera.addListener(this, &ofApp::setFollowCam);
+    guiWindow->mCameraFov.addListener(this, &ofApp::setCameraFov);
+    guiWindow->mCameraDistance.addListener(this, &ofApp::setCameraDistance);
+    
+    
+    nextTrigger = 0.0f;
+
 }
 
+
 void ofApp::update(){
+    if(ofGetElapsedTimef() > nextTrigger){
+        mAgentController->createRandomRepulsor();
+        mAgentController->createRandomAttractor();
+        nextTrigger = ofGetElapsedTimef() + ofRandom(3, 20);
+    }
     
     if(bEnableSimulation){
         mAgentController->applyFlocking();
@@ -81,19 +100,8 @@ void ofApp::update(){
         if(!mDataFile.is_open()) mDataFile.open("data.csv",ofFile::WriteOnly);
         mDataFile << mAgentController->getAllPositions() << "\n";
     }
-    //Used for now
-    if(bSendStats) {
-        ofxOscMessage m;
-        m.setAddress("/flock/stats");
-        m.addFloatArg(mAgentController->mBBArea);
-        m.addFloatArg(mAgentController->mBBAreaDT);
-        m.addFloatArg(mAgentController->mRatio);
-        m.addFloatArg(mAgentController->mRatioDT);
-        m.addFloatArg(mAgentController->mDirectionDT);
-        mOscSender.sendMessage(m, false);
-        
-    }
-
+    
+    mCam.lookAt(mAgentController->mSwarmStats.mBoundingBox.getCenter());
 }
 
 //--------------------------------------------------------------
@@ -103,9 +111,15 @@ void ofApp::draw(){
         sparkLines[i].draw(0,(ofGetHeight()-500) + i*50);
       }
     }
-    mCam.begin();
+    if(bUseFollowCamera) mCam.begin();
+    else mEasyCam.begin();
+    
     mAgentController->draw(bDrawAttractors);
-    mCam.end();
+
+    if(bUseFollowCamera) mCam.end();
+    else mEasyCam.end();
+
+
 
 }
 
@@ -118,8 +132,6 @@ void ofApp::keyPressed(int key){
         else ofLog() << "Finished Writing Data";
     } else if(key == 's'){
       bDrawSparkLines = !bDrawSparkLines;
-    } else if(key == 'b'){
-        bSendStats = !bSendStats;
     } else if(key == 'a') {
         bDrawAttractors = !bDrawAttractors;
     } else if(key == 'f') {
@@ -128,6 +140,32 @@ void ofApp::keyPressed(int key){
         f = !f;
     }
         
+}
+void ofApp::setOrtho(bool& b){
+    if(b){
+        mEasyCam.enableOrtho();
+        mCam.enableOrtho();
+    } else {
+        mEasyCam.disableOrtho();
+        mCam.disableOrtho();
+    }
+
+}
+void ofApp::setFollowCam(bool& b){
+    bUseFollowCamera = b;
+    if(!bUseFollowCamera){
+        auto v = mEasyCam.getPosition();
+        mCam.setPosition(v);
+    }
+}
+void ofApp::setCameraFov(int& f){
+    mEasyCam.setFov(f);
+    mCam.setFov(f);
+}
+void ofApp::setCameraDistance(int& f){
+    auto v = mEasyCam.getPosition();
+    mEasyCam.setPosition(v.x,v.y,-f);
+    mCam.setPosition(v.x,v.y, -f);
 }
 
 void ofApp::exit(){

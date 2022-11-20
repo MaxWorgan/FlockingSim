@@ -9,7 +9,7 @@ int main( ){
     settings.setGLVersion(1, 2);  // Programmable pipeline
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-    settings.setSize(220,500);
+    settings.setSize(220,700);
     settings.resizable = true;
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
     

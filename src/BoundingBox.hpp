@@ -21,15 +21,12 @@ public:
     glm::vec3 mMins;
     glm::vec3 mMaxs;
 
-    float width()  { return mMaxs.x - mMins.x; }
-    float height() { return mMaxs.y - mMins.y; }
-    float depth()  { return mMaxs.z - mMins.z; }
+    float boxWidth();
+    float boxHeight();
+    float boxDepth();
     
-    float ratio() { return (width() / height()) * (depth() / height()); }
-    
-    float area() { return width() * height() * depth();}
     glm::vec3 getCenter();
-
+    
 };
 
 #endif /* BoundingBox_hpp */

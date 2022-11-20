@@ -13,7 +13,17 @@ void GuiApp::setup(){
     ofSetDataPathRoot("../Resources/data/");
 
     gui.setup();
+    //GUI stuff
+    bAddRandomAttractor.setup("Add Random Attractor");
+    bClearAttractors.setup("Clear Attractors");
+    bAddRandomRepulsor.setup("Add Random Repulsor");
+    bClearRepulsors.setup("Clear Repulsors");
+    bDrawNeighbourhoodDistance.setName("Draw Neighbourhood Dist");
+    bDrawBoundingBox.setName("Draw Bounding Box");
+    bFollowCamera.setName("Camera Follow");
+    bCameraOrtho.setName("Orthographic");
 
+    gui.add(cameraParams);
     gui.add(flockingParams);
     gui.add(centerPullParams);
     gui.add(attractorParams);
@@ -22,17 +32,6 @@ void GuiApp::setup(){
     
     gui.loadFromFile(SETTINGS_FILE);
     
-    
-    //GUI stuff
-    bAddRandomAttractor.setup("Add Random Attractor");
-    bClearAttractors.setup("Clear Attractors");
-    bAddRandomRepulsor.setup("Add Random Repulsor");
-    bClearRepulsors.setup("Clear Repulsors");
-
-}
-
-
-void GuiApp::update(){
     
 }
 

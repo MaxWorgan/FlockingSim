@@ -19,9 +19,15 @@ class ofApp : public ofBaseApp{
         void exit();
 
 		void keyPressed(int key);
+    
+        void setOrtho(bool& b);
+        void setFollowCam(bool& b);
+        void setCameraFov(int& f);
+        void setCameraDistance(int& f);
 
         shared_ptr<GuiApp> guiWindow;
-        ofEasyCam mCam;
+        ofCamera mCam;
+        ofEasyCam mEasyCam;
     
         AgentController *mAgentController;
 
@@ -32,6 +38,10 @@ class ofApp : public ofBaseApp{
         bool bEnableSimulation;
         bool bDrawAttractors;
         bool bDrawSparkLines;
+    
+        bool bUseFollowCamera;
+    
+        float nextTrigger;
 
         ofxOscReceiver mOscReceiver;
         ofxOscSender mOscSender;

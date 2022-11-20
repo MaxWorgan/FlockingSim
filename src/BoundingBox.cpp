@@ -8,12 +8,12 @@
 #include "BoundingBox.hpp"
 
 void BoundingBox::reset() {
-    mMins.x = 1000;
-    mMins.y = 1000;
-    mMins.z = 1000;
-    mMaxs.x = -1000;
-    mMaxs.y = -1000;
-    mMaxs.z = -1000;
+    mMins.x = MAXFLOAT;
+    mMins.y = MAXFLOAT;
+    mMins.z = MAXFLOAT;
+    mMaxs.x = -MAXFLOAT;
+    mMaxs.y = -MAXFLOAT;
+    mMaxs.z = -MAXFLOAT;
 }
 
 void BoundingBox::update(const glm::vec3 pos) {
@@ -28,9 +28,14 @@ void BoundingBox::update(const glm::vec3 pos) {
     else if(pos.z > mMaxs.z) mMaxs.z = pos.z;
 
 }
+float BoundingBox::boxWidth()  { return mMaxs.x - mMins.x; }
+float BoundingBox::boxHeight() { return mMaxs.y - mMins.y; }
+float BoundingBox::boxDepth()  { return mMaxs.z - mMins.z; }
 
 glm::vec3 BoundingBox::getCenter() {
-    return mMaxs - mMins;
+    return glm::vec3(mMins.x + boxWidth()/2.0f,
+                     mMins.y + boxHeight()/2.0f,
+                     mMins.z + boxDepth()/2.0f);
 }
 
 void BoundingBox::draw() {
@@ -38,8 +43,8 @@ void BoundingBox::draw() {
     ofEnableDepthTest();
     ofNoFill();
     ofPushMatrix();
-    ofTranslate(glm::vec3(width()/2.0f, height()/2.0f,depth()/2.0f));
-    ofDrawBox(mMins.x,mMins.y,mMins.z,width(), height(), depth());
+    ofTranslate(getCenter());
+    ofDrawBox(boxWidth(), boxHeight(), boxDepth());
     ofPopMatrix();
     ofFill();
     ofDisableDepthTest();
