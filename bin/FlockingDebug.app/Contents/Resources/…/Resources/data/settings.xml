@@ -1,25 +1,65 @@
 <?xml version="1.0"?>
+<Flocking_Parameters>
+	<Seperation_Strength>1e-05</Seperation_Strength>
+	<Seperation_Strength_Variation>0.0006</Seperation_Strength_Variation>
+	<Align_Strength>0.0245076</Align_Strength>
+	<Align_Strength_Variation>0.00165</Align_Strength_Variation>
+	<Cohesion_Strength>0.0080092</Cohesion_Strength>
+	<Cohesion_Strength_Variation>0.0019</Cohesion_Strength_Variation>
+	<Center_Pull_Parameters>
+		<Center_Pull_Strength>5.10204e-05</Center_Pull_Strength>
+		<Center_Size>9133.52</Center_Size>
+	</Center_Pull_Parameters>
+	<Neighbourhood_distance>225.6</Neighbourhood_distance>
+</Flocking_Parameters>
+<Center_Pull_Parameters>
+	<Center_Pull_Strength>9.36567e-05</Center_Pull_Strength>
+	<Center_Size>10</Center_Size>
+	<Lower_Threshold>
+		<Lower_Threshold>0.205224</Lower_Threshold>
+		<Higher_Threshold>0.720149</Higher_Threshold>
+	</Lower_Threshold>
+</Center_Pull_Parameters>
+<Force_Parameters>
+	<Center_Pull_Strength>0.0171642</Center_Pull_Strength>
+	<Center_Size>11949.1</Center_Size>
+	<Attractor_Max_Distance>247022</Attractor_Max_Distance>
+	<Attractor_Strength>63.4328</Attractor_Strength>
+	<Lower_Threshold>
+		<Lower_Threshold>0.4</Lower_Threshold>
+		<Higher_Threshold>0.76</Higher_Threshold>
+	</Lower_Threshold>
+</Force_Parameters>
 <group>
 	<Flocking_Parameters>
-		<Seperation_Strength>0.0561268</Seperation_Strength>
-		<Align_Strength>0.0505152</Align_Strength>
-		<Cohesion_Strength>0.0219466</Cohesion_Strength>
-		<Neighbourhood_distance>100</Neighbourhood_distance>
+		<Seperation_Strength>0.0331699</Seperation_Strength>
+		<Align_Strength>0.0811243</Align_Strength>
+		<Cohesion_Strength>0.0250075</Cohesion_Strength>
+		<Neighbourhood_distance>112.5</Neighbourhood_distance>
 	</Flocking_Parameters>
+	<Force_Parameters>
+		<Center_Pull_Strength>0.00153061</Center_Pull_Strength>
+		<Center_Size>47454.2</Center_Size>
+		<Attractor_Max_Distance>0</Attractor_Max_Distance>
+		<Attractor_Strength>36.2245</Attractor_Strength>
+		<Attractor_Min_Distance>26.5306</Attractor_Min_Distance>
+		<Repulsor_Strength>100</Repulsor_Strength>
+		<Repulsor_Min_Distance>6.12245</Repulsor_Min_Distance>
+	</Force_Parameters>
 	<Center_Pull>
-		<Center_Pull_Strength>0.000510204</Center_Pull_Strength>
-		<Center_Size>100</Center_Size>
+		<Center_Pull_Strength>0.00102041</Center_Pull_Strength>
+		<Center_Size>4091.22</Center_Size>
 	</Center_Pull>
 	<Attractors>
-		<Attractor_Strength>10</Attractor_Strength>
-		<Attractor_Min_Distance>10</Attractor_Min_Distance>
+		<Attractor_Strength>88.2653</Attractor_Strength>
+		<Attractor_Min_Distance>32.6531</Attractor_Min_Distance>
 	</Attractors>
 	<Repulsors>
-		<Repulsor_Strength>10</Repulsor_Strength>
-		<Repulsor_Min_Distance>10</Repulsor_Min_Distance>
+		<Repulsor_Strength>100</Repulsor_Strength>
+		<Repulsor_Min_Distance>2.04082</Repulsor_Min_Distance>
 	</Repulsors>
 	<Wind_Parameters>
-		<Wind_Amount>0.306122</Wind_Amount>
-		<Wind_Mult>0.001</Wind_Mult>
+		<Wind_Amount>2.04082</Wind_Amount>
+		<Wind_Mult>0.000612245</Wind_Mult>
 	</Wind_Parameters>
 </group>

@@ -54,6 +54,11 @@ void ofApp::setup(){
 
 
 void ofApp::update(){
+    
+    std::stringstream strm;
+    strm << "fps: " << ofGetFrameRate();
+    ofSetWindowTitle(strm.str());
+    
     if(ofGetElapsedTimef() > nextTrigger){
         mAgentController->createRandomRepulsor();
         mAgentController->createRandomAttractor();
@@ -101,7 +106,7 @@ void ofApp::update(){
         mDataFile << mAgentController->getAllPositions() << "\n";
     }
     
-    mCam.lookAt(mAgentController->mSwarmStats.mBoundingBox.getCenter());
+    if(bUseFollowCamera) mCam.lookAt(mAgentController->mSwarmStats.mBoundingBox.getCenter());
 }
 
 //--------------------------------------------------------------
