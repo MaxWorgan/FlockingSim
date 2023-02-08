@@ -83,8 +83,7 @@ void ofApp::update(){
             int index = m.getArgAsInt(0);
             float x = m.getArgAsFloat(1);
             float y = m.getArgAsFloat(2);
-            float z = m.getArgAsFloat(3);
-            mAgentController->updateAgent(index,x,y,z);
+            mAgentController->updateAgent(index,x,y);
         } else if(m.getAddress() == "/flock/pca"){
             if(m.getNumArgs() != 10) {
                 ofLog() << "Invalid pca data recieved - expected 10 elements" << endl;
@@ -109,7 +108,7 @@ void ofApp::update(){
         mDataFile << mAgentController->getAllPositions() << "\n";
     }
     
-    if(bUseFollowCamera) mCam.lookAt(mAgentController->mSwarmStats.mBoundingBox.getCenter());
+    if(bUseFollowCamera) mCam.lookAt(glm::vec3(mAgentController->mSwarmStats.mBoundingBox.getCenter(),0));
 }
 
 //--------------------------------------------------------------

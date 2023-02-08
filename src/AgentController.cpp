@@ -13,10 +13,10 @@ using util::lang::indices;
 
 AgentController::AgentController(size_t numAgents,shared_ptr<GuiApp> guiWindow){
     for(size_t i = 0; i < numAgents; ++i){
-        flock.push_back(Agent(glm::vec3(ofRandomWidth() - (ofGetWidth() * 0.5),ofRandomHeight() - (ofGetHeight() * 0.5), ofRandom(100))));
+        flock.push_back(Agent(glm::vec2(ofRandomWidth() - (ofGetWidth() * 0.5),ofRandomHeight() - (ofGetHeight() * 0.5))));
         mAllPositions.push_back(flock[i].mPosition);
     }
-    int size = (int) mAllPositions.size() * sizeof(glm::vec3);
+    int size = (int) mAllPositions.size() * sizeof(glm::vec2);
     mSharedPositionData.setup(size);
     bool isConnected = mSharedPositionData.connect();
     ofLog() << "Memory was mapped? " << isConnected;
@@ -103,16 +103,16 @@ void AgentController::toggleDrawBoundingBox(bool& b){
     bDrawBoundingBox = b;
 }
 
-void AgentController::attract(Agent &agent, const glm::vec3 &pos, const float strength, const float minDistance){
-    glm::vec3 direction = pos - agent.mPosition;
+void AgentController::attract(Agent &agent, const glm::vec2 &pos, const float strength, const float minDistance){
+    glm::vec2 direction = pos - agent.mPosition;
     float distance = glm::length(direction);
     if(distance > minDistance){
         agent.applyForce(glm::normalize(direction) * (1/distance) * strength);
     }
 }
 
-void AgentController::applyCenterPull(Agent &agent,const glm::vec3 &center) {
-    glm::vec3 direction = center - agent.mPosition;
+void AgentController::applyCenterPull(Agent &agent,const glm::vec2 &center) {
+    glm::vec2 direction = center - agent.mPosition;
     float distance = glm::length(direction);
     if(distance > gui->mMaxCenterDistanceSq){
         agent.applyForce(glm::normalize(direction) * (distance - gui->mMaxCenterDistanceSq) * gui->mCenterPullStrength.get());
@@ -122,8 +122,7 @@ void AgentController::applyCenterPull(Agent &agent,const glm::vec3 &center) {
 void AgentController::applyWind(Agent &agent, const float windAmount){
     float x = ofSignedNoise(agent.mPosition.x*gui->mWindMult);
     float y = ofSignedNoise(agent.mPosition.y*gui->mWindMult);
-    float z = ofSignedNoise(agent.mPosition.z*gui->mWindMult);
-    agent.applyForce(glm::vec3(x,y,z) * windAmount);
+    agent.applyForce(glm::vec2(x,y) * windAmount);
     
 }
 
@@ -136,7 +135,7 @@ void AgentController::applyForces(){
         //wind
         applyWind(agent, gui->mWindAmount);
         //centerpull
-        applyCenterPull(agent, glm::vec3(0,0,100));
+        applyCenterPull(agent, glm::vec2(0,0));
     }
     if(attractorTimers.size() > 0){
       if(attractorTimers.front() <= ofGetUnixTime()){
@@ -162,8 +161,8 @@ void AgentController::updateAgents(){
     mSharedPositionData.setData(&mAllPositions[0]);
 }
 
-void AgentController::updateAgent(int index, float x, float y, float z){
-    flock.at(index).setPosition(glm::vec3(x,y,z));
+void AgentController::updateAgent(int index, float x, float y){
+    flock.at(index).setPosition(glm::vec2(x,y));
 }
 
 void AgentController::draw(bool drawAttractors) {
@@ -172,11 +171,11 @@ void AgentController::draw(bool drawAttractors) {
         ofPushStyle();
         ofSetColor(ofColor::white);
         for(auto &a : attractors) {
-            ofDrawSphere(a,15);
+            ofDrawCircle(a,15);
         }
         ofSetColor(ofColor::indianRed);
         for(auto &a : repulsors) {
-            ofDrawSphere(a,15);
+            ofDrawCircle(a,15);
         }
         ofPopStyle();
     }
@@ -190,13 +189,13 @@ void AgentController::draw(bool drawAttractors) {
             ofEnableBlendMode(OF_BLENDMODE_ALPHA);
             //draw cohesion sphere
             ofSetColor(ofColor::lightBlue,gui->mCohesionStrength * 100.0f);
-            ofDrawSphere(a.mPosition,s3);
+            ofDrawCircle(a.mPosition,s3);
             //draw allignment sphere
             ofSetColor(ofColor::lightYellow,gui->mAlignStrength * 100.0f);
-            ofDrawSphere(a.mPosition,s2);
+            ofDrawCircle(a.mPosition,s2);
             //draw seperate sphere
             ofSetColor(ofColor::paleVioletRed,gui->mSeperateStrength * 100.0f);
-            ofDrawSphere(a.mPosition,s1);
+            ofDrawCircle(a.mPosition,s1);
             ofPopStyle();
             a.draw();
         }

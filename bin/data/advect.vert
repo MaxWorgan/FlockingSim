@@ -1,7 +1,7 @@
 #version 330
 
-in vec3 Position;
-out vec3 vPosition;
+in vec2 Position;
+out vec2 vPosition;
 
 uniform sampler2D uXY;
 uniform sampler2D uXZ;
@@ -10,10 +10,10 @@ uniform sampler2D uYZ;
 uniform float Time;
 const float UINT_MAX = 4294967295.0;
 
-uniform vec3 dims;
+uniform vec2 dims;
 
 uniform float curlamt;
-uniform vec3 constVel;
+uniform vec2 constVel;
 uniform float advectDt;
 
 uint randhash(uint seed)
@@ -31,13 +31,13 @@ float randhashf(uint seed, float b)
 }
 
 
-vec3 SampleVelocity(vec3 p)
+vec2 SampleVelocity(vec2 p)
 {
     vec2 xy = texture(uXY, p.xy).rb;
     vec2 xz = texture(uXZ, p.xz).rb;
     vec2 yz = texture(uYZ, p.yz).rb;
     
-    vec3 curl;
+    vec2 curl;
     curl.x = yz.y - yz.x;
     curl.y = xz.x - xz.y;
     curl.z = xy.y - xy.x;
@@ -48,8 +48,8 @@ vec3 SampleVelocity(vec3 p)
 void main()
 {
     vPosition = Position;
-    vec3 loc = vec3(Position.x, Position.y, abs(Position.z)) / dims;
-    vec3 curlvel = SampleVelocity(loc.xyz);
+    vec2 loc = vec2(Position.x, Position.y, abs(Position.z)) / dims;
+    vec2 curlvel = SampleVelocity(loc.xyz);
 
     vPosition.xyz += (constVel + curlvel * curlamt) * advectDt;
     

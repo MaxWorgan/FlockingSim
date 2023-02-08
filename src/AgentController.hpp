@@ -23,12 +23,12 @@ public:
     AgentController(size_t numAgents, shared_ptr<GuiApp> guiWindow);
     void draw(bool drawAttractors);
     void applyFlocking();
-    void attract(Agent &agent, const glm::vec3 &pos, const float strength, const float minDistance);
+    void attract(Agent &agent, const glm::vec2 &pos, const float strength, const float minDistance);
     void applyWind(Agent &agent, const float windAmount);
-    void applyCenterPull(Agent &agent, const glm::vec3 &center);
+    void applyCenterPull(Agent &agent, const glm::vec2 &center);
     void applyForces();
     void updateAgents();
-    void updateAgent(int index, float x, float y, float z);
+    void updateAgent(int index, float x, float y);
     
     void setHigherThreshold(float& f);
     void setLowerThreshold(float& f);
@@ -47,18 +47,18 @@ public:
     shared_ptr<GuiApp> gui;
 
     vector<Agent> flock;
-    vector<glm::vec3> mAllPositions;
+    vector<glm::vec2> mAllPositions;
     
     SwarmStats mSwarmStats;
 
-    vector<glm::vec3> attractors;
+    vector<glm::vec2> attractors;
     vector<unsigned int> attractorTimers;
-    vector<glm::vec3> repulsors;
+    vector<glm::vec2> repulsors;
     vector<unsigned int> repulsorTimers;
     
     bool bDrawNeighbourhood,bDrawBoundingBox;
     
-    ofxSharedMemory<glm::vec3*> mSharedPositionData;
+    ofxSharedMemory<glm::vec2*> mSharedPositionData;
 
 };
 

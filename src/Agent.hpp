@@ -15,17 +15,17 @@ class Agent{
     
 
 public:
-    Agent(glm::vec3 position);
+    Agent(glm::vec2 position);
     
-    void applyForce(glm::vec3 force);
+    void applyForce(glm::vec2 force);
     void updatePosition();
-    void setPosition(glm::vec3 pos);
+    void setPosition(glm::vec2 pos);
     void draw();
     void setMaxSpeed(float ms);
     
-    glm::vec3 mPosition;
-    glm::vec3 mVelocity;
-    glm::vec3 mAcceleration;
+    glm::vec2 mPosition;
+    glm::vec2 mVelocity;
+    glm::vec2 mAcceleration;
     
     float mMass;
     float mMaxSpeed;

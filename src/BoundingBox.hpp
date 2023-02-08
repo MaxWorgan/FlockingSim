@@ -15,17 +15,16 @@ class BoundingBox{
 
 public:
     void draw();
-    void update(const glm::vec3 pos);
+    void update(const glm::vec2 pos);
     void reset();
 
-    glm::vec3 mMins;
-    glm::vec3 mMaxs;
+    glm::vec2 mMins;
+    glm::vec2 mMaxs;
 
     float boxWidth();
     float boxHeight();
-    float boxDepth();
     
-    glm::vec3 getCenter();
+    glm::vec2 getCenter();
     
 };
 

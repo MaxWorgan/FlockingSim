@@ -22,8 +22,8 @@ public:
     void reset();
     
     float mRatio, mRatioDT;
-    glm::vec3 mAvgVelocity, mAvgVelocityDT;
-    glm::vec3 mCenterOfMass;
+    glm::vec2 mAvgVelocity, mAvgVelocityDT;
+    glm::vec2 mCenterOfMass;
     float mBoundingBoxArea;
     float mEntropy;
     int counter = 0;

@@ -213,7 +213,7 @@
 		E42963172163EDD300A6A9E2 /* ofMath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofMath.cpp; path = ../../../libs/openFrameworks/math/ofMath.cpp; sourceTree = SOURCE_ROOT; };
 		E42963182163EDD300A6A9E2 /* ofMathConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofMathConstants.h; path = ../../../libs/openFrameworks/math/ofMathConstants.h; sourceTree = SOURCE_ROOT; };
 		E42963192163EDD300A6A9E2 /* ofMatrix4x4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofMatrix4x4.h; path = ../../../libs/openFrameworks/math/ofMatrix4x4.h; sourceTree = SOURCE_ROOT; };
-		E429631A2163EDD300A6A9E2 /* ofVec3f.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofVec3f.h; path = ../../../libs/openFrameworks/math/ofVec3f.h; sourceTree = SOURCE_ROOT; };
+		E429631A2163EDD300A6A9E2 /* ofvec2f.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofvec2f.h; path = ../../../libs/openFrameworks/math/ofvec2f.h; sourceTree = SOURCE_ROOT; };
 		E429631B2163EDD300A6A9E2 /* ofMatrix3x3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofMatrix3x3.cpp; path = ../../../libs/openFrameworks/math/ofMatrix3x3.cpp; sourceTree = SOURCE_ROOT; };
 		E429631C2163EDD300A6A9E2 /* ofMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofMath.h; path = ../../../libs/openFrameworks/math/ofMath.h; sourceTree = SOURCE_ROOT; };
 		E429631D2163EDD300A6A9E2 /* ofQuaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofQuaternion.h; path = ../../../libs/openFrameworks/math/ofQuaternion.h; sourceTree = SOURCE_ROOT; };
@@ -662,7 +662,7 @@
 				E429631D2163EDD300A6A9E2 /* ofQuaternion.h */,
 				E42963142163EDD300A6A9E2 /* ofVec2f.cpp */,
 				E42963202163EDD300A6A9E2 /* ofVec2f.h */,
-				E429631A2163EDD300A6A9E2 /* ofVec3f.h */,
+				E429631A2163EDD300A6A9E2 /* ofvec2f.h */,
 				E42963152163EDD300A6A9E2 /* ofVec4f.cpp */,
 				E42963162163EDD300A6A9E2 /* ofVec4f.h */,
 				E429631E2163EDD300A6A9E2 /* ofVectorMath.h */,

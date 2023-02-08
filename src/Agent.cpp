@@ -8,24 +8,22 @@
 #include "Agent.hpp"
 
 
-Agent::Agent(glm::vec3 position) {
+Agent::Agent(glm::vec2 position) {
     
     mPosition = position;
     
     mVelocity.x = ofRandomuf();
     mVelocity.y = ofRandomuf();
-    mVelocity.z = ofRandomuf();
     
     mAcceleration.x = 0;
     mAcceleration.y = 0;
-    mAcceleration.z = 0;
     
     mMass = ofRandom(2.0,3.5);
     mMaxSpeed = 5.0f + ofRandom(2.0f);
     
 }
 
-void Agent::applyForce(const glm::vec3 force){
+void Agent::applyForce(const glm::vec2 force){
     mAcceleration += force / mMass;
 }
 
@@ -43,10 +41,10 @@ void Agent::setMaxSpeed(float ms){
 }
 
 void Agent::draw(){
-    ofDrawSphere(mPosition,mMass);
+    ofDrawCircle(mPosition,mMass);
 }
 
 
-void Agent::setPosition(const glm::vec3 pos){
+void Agent::setPosition(const glm::vec2 pos){
     mPosition = pos;
 }
