@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/Users/mw469/Documents/of_v0.11.2_osx_release/apps/myApps/FlockingSim",
+            "binaryPath": "/Users/mw469/Documents/of_v0.11.2_osx_release/apps/myApps/FlockingSim/bin/FlockingSim_debug/Contents/MacOS/FlockingSim_debug",
+            "binaryArgs": []
+        },
+        {
+            "cwd": "/Users/mw469/Documents/of_v0.11.2_osx_release/libs/openFrameworksCompiled/project",
+            "binaryPath": "/Users/mw469/Documents/of_v0.11.2_osx_release/libs/openFrameworksCompiled/project/a.out",
+            "binaryArgs": []
+        },
+        {
+            "cwd": "/Users/mw469/Documents/of_v0.11.2_osx_release/apps/myApps/FlockingSim/bin",
+            "binaryPath": "/Users/mw469/Documents/of_v0.11.2_osx_release/apps/myApps/FlockingSim/bin/FlockingSim_debug",
+            "binaryArgs": []
+        }
+    ]
+}

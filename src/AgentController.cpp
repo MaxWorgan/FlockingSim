@@ -30,6 +30,7 @@ AgentController::AgentController(size_t numAgents,shared_ptr<GuiApp> guiWindow){
     gui->bClearAttractors.addListener(this, &AgentController::clearAttractors);
     
     gui->bAddRandomRepulsor.addListener(this, &AgentController::createRandomRepulsor);
+
     
     gui->bClearRepulsors.addListener(this, &AgentController::clearRepulsors);
     

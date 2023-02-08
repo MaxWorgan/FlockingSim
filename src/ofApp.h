@@ -24,6 +24,7 @@ class ofApp : public ofBaseApp{
         void setFollowCam(bool& b);
         void setCameraFov(int& f);
         void setCameraDistance(int& f);
+        void toggleAutoAttractors(bool& b);
 
         shared_ptr<GuiApp> guiWindow;
         ofCamera mCam;
@@ -38,6 +39,7 @@ class ofApp : public ofBaseApp{
         bool bEnableSimulation;
         bool bDrawAttractors;
         bool bDrawSparkLines;
+        bool bAutoAttractors;
     
         bool bUseFollowCamera;
     

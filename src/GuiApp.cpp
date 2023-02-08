@@ -15,6 +15,7 @@ void GuiApp::setup(){
     gui.setup();
     //GUI stuff
     bAddRandomAttractor.setup("Add Random Attractor");
+
     bClearAttractors.setup("Clear Attractors");
     bAddRandomRepulsor.setup("Add Random Repulsor");
     bClearRepulsors.setup("Clear Repulsors");
@@ -22,6 +23,7 @@ void GuiApp::setup(){
     bDrawBoundingBox.setName("Draw Bounding Box");
     bFollowCamera.setName("Camera Follow");
     bCameraOrtho.setName("Orthographic");
+    bAutoAttractor.setName("Auto Add Attractors");
 
     gui.add(cameraParams);
     gui.add(flockingParams);

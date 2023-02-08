@@ -40,6 +40,7 @@ public:
     
     void toggleDrawNeighbourhood(bool& value);
     void toggleDrawBoundingBox(bool& value);
+    void toggleAutoAttractor(bool& value);
     
     string getAllPositions();
     

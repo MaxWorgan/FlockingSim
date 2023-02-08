@@ -38,6 +38,7 @@ public:
     ofParameter<int> mCameraFov{"FOV", 60, 5, 360};
     
     ofxButton bAddRandomAttractor;
+    ofParameter<bool> bAutoAttractor;
     ofxButton bClearAttractors;
     ofxButton bAddRandomRepulsor;
     ofxButton bClearRepulsors;
@@ -83,7 +84,8 @@ public:
         mCohesionStrength,
         mNeighbourhoodDistance,
         bDrawNeighbourhoodDistance,
-        bDrawBoundingBox
+        bDrawBoundingBox,
+        bAutoAttractor,
     };
     
     ofParameterGroup windParams{ "Wind Parameters",

@@ -27,6 +27,7 @@ void ofApp::setup(){
     bEnableSimulation = true;
     bDrawAttractors   = true;
     bDrawSparkLines   = true;
+    bAutoAttractors   = false;
     
     mOscReceiver.setup(OSC_RECEIVE_PORT);
     mOscSender.setup(OSC_TARGET_HOST, OSC_TARGET_PORT);
@@ -46,6 +47,7 @@ void ofApp::setup(){
     guiWindow->bFollowCamera.addListener(this, &ofApp::setFollowCam);
     guiWindow->mCameraFov.addListener(this, &ofApp::setCameraFov);
     guiWindow->mCameraDistance.addListener(this, &ofApp::setCameraDistance);
+    guiWindow->bAutoAttractor.addListener(this, &ofApp::toggleAutoAttractors);
     
     
     nextTrigger = 0.0f;
@@ -58,11 +60,12 @@ void ofApp::update(){
     std::stringstream strm;
     strm << "fps: " << ofGetFrameRate();
     ofSetWindowTitle(strm.str());
-    
-    if(ofGetElapsedTimef() > nextTrigger){
-        mAgentController->createRandomRepulsor();
-        mAgentController->createRandomAttractor();
-        nextTrigger = ofGetElapsedTimef() + ofRandom(3, 20);
+    if(bAutoAttractors){
+        if(ofGetElapsedTimef() > nextTrigger){
+            mAgentController->createRandomRepulsor();
+            mAgentController->createRandomAttractor();
+            nextTrigger = ofGetElapsedTimef() + ofRandom(3, 20);
+        }
     }
     
     if(bEnableSimulation){
@@ -171,6 +174,11 @@ void ofApp::setCameraDistance(int& f){
     auto v = mEasyCam.getPosition();
     mEasyCam.setPosition(v.x,v.y,-f);
     mCam.setPosition(v.x,v.y, -f);
+}
+
+void ofApp::toggleAutoAttractors(bool &b)
+{
+    bAutoAttractors = b;
 }
 
 void ofApp::exit(){
