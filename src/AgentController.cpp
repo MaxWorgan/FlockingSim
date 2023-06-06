@@ -23,6 +23,7 @@ AgentController::AgentController(size_t numAgents,shared_ptr<GuiApp> guiWindow){
     ofLog() << "&mAllPositions[0] " << &mAllPositions[0];
     ofLog() << "Size: " << size;
     gui = guiWindow;
+    mWorldDimensions = glm::vec2(500,500);
     
     //GUI stuff
     gui->bAddRandomAttractor.addListener(this, &AgentController::createRandomAttractor);
@@ -103,6 +104,14 @@ void AgentController::toggleDrawBoundingBox(bool& b){
     bDrawBoundingBox = b;
 }
 
+void AgentController::toggleCenterPull(bool &value) {
+    bEnableCenterPull = value;
+}
+
+void AgentController::toggleSpaceWrap(bool &value) {
+    bEnableWrapAround = value;
+}
+
 void AgentController::attract(Agent &agent, const glm::vec2 &pos, const float strength, const float minDistance){
     glm::vec2 direction = pos - agent.mPosition;
     float distance = glm::length(direction);
@@ -126,6 +135,13 @@ void AgentController::applyWind(Agent &agent, const float windAmount){
     
 }
 
+void AgentController::wrapAround(Agent &a) {
+    if(a.mPosition.x < 0) a.mPosition.x = mWorldDimensions.x;
+    else if(a.mPosition.x > mWorldDimensions.x) a.mPosition.x = 0;
+    if(a.mPosition.y < 0) a.mPosition.y = mWorldDimensions.y;
+    else if(a.mPosition.y > mWorldDimensions.y) a.mPosition.y = 0;
+}
+
 void AgentController::applyForces(){
     for(Agent &agent: flock){
         //attractors
@@ -135,7 +151,9 @@ void AgentController::applyForces(){
         //wind
         applyWind(agent, gui->mWindAmount);
         //centerpull
-        applyCenterPull(agent, glm::vec2(0,0));
+        if(bEnableCenterPull) applyCenterPull(agent, glm::vec2(0,0));
+        //wrapAround
+        if(bEnableWrapAround) wrapAround(agent);
     }
     if(attractorTimers.size() > 0){
       if(attractorTimers.front() <= ofGetUnixTime()){

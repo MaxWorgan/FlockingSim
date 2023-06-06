@@ -37,12 +37,17 @@ public:
     void clearAttractors();
     void createRandomRepulsor();
     void clearRepulsors();
+    void wrapAround(Agent &agent);
     
     void toggleDrawNeighbourhood(bool& value);
     void toggleDrawBoundingBox(bool& value);
     void toggleAutoAttractor(bool& value);
+    void toggleCenterPull(bool& value);
+    void toggleSpaceWrap(bool& value);
     
     string getAllPositions();
+
+    glm::vec2 mWorldDimensions;
     
     shared_ptr<GuiApp> gui;
 
@@ -56,7 +61,7 @@ public:
     vector<glm::vec2> repulsors;
     vector<unsigned int> repulsorTimers;
     
-    bool bDrawNeighbourhood,bDrawBoundingBox;
+    bool bDrawNeighbourhood,bDrawBoundingBox,bEnableWrapAround,bEnableCenterPull;
     
     ofxSharedMemory<glm::vec2*> mSharedPositionData;
 

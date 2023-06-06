@@ -27,6 +27,8 @@ public:
     ofParameter<float> mNeighbourhoodDistance{"Neighbourhood distance", 100.0f, 10.f, 500.0f };
     ofParameter<float> mLowerThreshold{"Lower Threshold", 0.4, 0.0, 1.0};
     ofParameter<float> mHigherThreshold{"Higher Threshold", 0.76, 0 , 1.0 };
+    ofParameter<float> mWorldSizeWidth{"World Width", 500, 100, 5000};
+    ofParameter<float> mWorldSizeHeight{"World Height", 500, 100, 5000};
     ofParameter<float> mAttractorStrength{"Attractor Strength", 10.f, 0.f, 1000.f};
     ofParameter<float> mAttractorMinDistance{"Attractor Min Distance", 10.f, 0.f, 1000.f};
     ofParameter<float> mRepulsorStrength{"Repulsor Strength", 10.f, 0.f, 1000.f};
@@ -47,6 +49,8 @@ public:
     ofParameter<bool> bDrawBoundingBox;
     ofParameter<bool> bFollowCamera;
     ofParameter<bool> bCameraOrtho;
+    ofParameter<bool> bCenterPull;
+    ofParameter<bool> bWrapAround;
     
     
     
@@ -58,6 +62,10 @@ public:
     };
 
     ofParameterGroup centerPullParams{"Center Pull",
+        mWorldSizeWidth,
+        mWorldSizeHeight,
+        bCenterPull,
+        bWrapAround,
         mCenterPullStrength,
         mMaxCenterDistanceSq,
     };
