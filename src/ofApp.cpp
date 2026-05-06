@@ -23,11 +23,11 @@ void ofApp::setup(){
     mAgentController = new AgentController(100,guiWindow);
 
 
-    bWriteData        = false;
-    bEnableSimulation = true;
-    bDrawAttractors   = true;
-    bDrawSparkLines   = true;
-    bAutoAttractors   = false;
+    bWriteData            = false;
+    bEnableSimulation     = true;
+    bDrawAttractors       = true;
+    bDrawSparkLines       = true;
+    bEnableAutoAttractors = false;
     
     mOscReceiver.setup(OSC_RECEIVE_PORT);
     mOscSender.setup(OSC_TARGET_HOST, OSC_TARGET_PORT);
@@ -60,7 +60,8 @@ void ofApp::update(){
     std::stringstream strm;
     strm << "fps: " << ofGetFrameRate();
     ofSetWindowTitle(strm.str());
-    if(bAutoAttractors){
+    
+    if(bEnableAutoAttractors) {
         if(ofGetElapsedTimef() > nextTrigger){
             mAgentController->createRandomRepulsor();
             mAgentController->createRandomAttractor();
@@ -146,6 +147,8 @@ void ofApp::keyPressed(int key){
         static bool f = true;
         ofSetFullscreen(f);
         f = !f;
+    } else if (key == 'e') {
+        bEnableAutoAttractors = !bEnableAutoAttractors;
     }
         
 }

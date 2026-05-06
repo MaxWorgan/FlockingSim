@@ -39,7 +39,7 @@ class ofApp : public ofBaseApp{
         bool bEnableSimulation;
         bool bDrawAttractors;
         bool bDrawSparkLines;
-        bool bAutoAttractors;
+        bool bEnableAutoAttractors;
     
         bool bUseFollowCamera;
     
