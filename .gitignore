@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/xcode,macos,linux,c++,openframeworks
 # Edit at https://www.toptal.com/developers/gitignore?templates=xcode,macos,linux,c++,openframeworks
 
+.vscode/
+
 ### C++ ###
 # Prerequisites
 *.d
